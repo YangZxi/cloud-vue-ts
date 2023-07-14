@@ -6,7 +6,6 @@
 
 <script setup>
 import { onMounted } from "vue";
-import videoBg from '@/assets/video-bg.jpg';
 import DPlayer from 'dplayer';
 
 const props = defineProps({

@@ -44,14 +44,13 @@ jobs:
       - name: build
         run: pnpm run build
 
-      # - name: Delete exist files
-      #   uses: garygrossgarten/github-action-ssh@release
-      #   with:
-      #     command: rm -rf ${{ secrets.DEPLOY_PATH }}/* && scp -r dist/* ${{ secrets.DEPLOY_PATH }}
-      #     host: ${{ secrets.DEPLOY_HOST }}
-      #     username: ${{ secrets.DEPLOY_USER }}
-      #     port: 22
-      #     privateKey: ${{ secrets.DEPLOY_SSH_KEY }}
+      - name: Delete exist files
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: rm -rf ${{ secrets.DEPLOY_PATH }} && mkdir ${{ secrets.DEPLOY_PATH }}
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          privateKey: ${{ secrets.DEPLOY_SSH_KEY }}
       
       - name: Deploy to server
         uses: wlixcc/SFTP-Deploy-Action@v1.0 

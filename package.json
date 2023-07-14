@@ -1,7 +1,6 @@
 {
-  "name": "cloud-vue",
-  "private": true,
-  "version": "1.0.0",
+  "name": "cloud-vue-ts",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "prod": "vite --mode production",

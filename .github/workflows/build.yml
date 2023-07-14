@@ -17,31 +17,47 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 20.x
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: latest
+          run_install: false
 
-      # - name: Cache pnpm modules
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ~/.pnpm-store
-      #     key: ${{ runner.OS }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-      #     restore-keys: |
-      #       ${{ runner.OS }}-pnpm-
-            
-      - name: Install Dependencies
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
         run: pnpm install
 
       - name: build
         run: pnpm run build
 
-      - name: Install SSH key
-        uses: webfactory/ssh-agent@v0.5.3
-        with:
-          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
-
-      - name: Deploy to Server
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER_HOST }} "rm -rf ${{ secrets.PATH }}/*"
-          scp -r dist/ ${{ secrets.DEPLOY_USER_HOST }}:${{ secrets.PATH }}
+      # - name: Delete exist files
+      #   uses: garygrossgarten/github-action-ssh@release
+      #   with:
+      #     command: rm -rf ${{ secrets.DEPLOY_PATH }}/* && scp -r dist/* ${{ secrets.DEPLOY_PATH }}
+      #     host: ${{ secrets.DEPLOY_HOST }}
+      #     username: ${{ secrets.DEPLOY_USER }}
+      #     port: 22
+      #     privateKey: ${{ secrets.DEPLOY_SSH_KEY }}
+      
+      - name: Deploy to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.0 
+        with:  
+          username: ${{ secrets.DEPLOY_USER }}
+          server: ${{ secrets.DEPLOY_HOST }}
+          ssh_private_key: ${{ secrets.DEPLOY_SSH_KEY }}
+          local_path: './dist/*'
+          remote_path: ${{ secrets.DEPLOY_PATH }}

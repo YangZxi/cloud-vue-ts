@@ -208,13 +208,22 @@ const popselect = reactive({
   value: "",
   options: [
     {
+      label: "我的分享",
+      value: "ShareList"
+    },
+    {
       label: "退出登录",
-      value: 0
+      value: "Logout"
     }
   ],
-  popselectHanlder: (val: number) => {
+  popselectHanlder: (val: string) => {
     switch (val) {
-      case 0:
+      case "ShareList":
+        $router.push({
+          name: "ShareList"
+        });
+        break;
+      case "Logout":
         user().logout();
         $router.push({
           name: "Login",

@@ -86,7 +86,7 @@ onMounted(() => {
   window.$loadingBar.start();
   // list().then(() => window.$loadingBar.finish()).catch(() => window.$loadingBar.error());
   API.pass(id.value, null).then(() => {
-    list();
+    getShareInfo();
   }).catch(() => {
     showPwd.value = true;
   });
@@ -95,13 +95,13 @@ onMounted(() => {
   }, 10000);
 });
 
-const list = function(path) {
+const getShareInfo = function(path) {
   if (sharePinia().token === null) {
     showPwd.value = true;
     return Promise.resolve(1);
   }
   window.$loadingBar.start();
-  return API.getShareList(id.value, path).then(res => {
+  return API.getShareInfo(id.value, path).then(res => {
     shareData.value = res;
     console.log(shareData.value);
     window.$loadingBar.finish();

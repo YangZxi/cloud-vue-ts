@@ -1,4 +1,4 @@
-name: Deploy when PR is merged to main
+name: Build to remote server
 
 on:
   push:

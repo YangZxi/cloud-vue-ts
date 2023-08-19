@@ -66,12 +66,12 @@
 <script setup>
 import PassInput from "@/components/PassInput.vue";
 import FilePath from "@/components/ExplorerToolBar/FilePath.vue";
-import {h, onMounted, readonly, ref} from "vue";
-import {useRoute} from "vue-router";
-import {sharePinia} from "@/store/share";
+import { h, onMounted, readonly, ref } from "vue";
+import { useRoute } from "vue-router";
+import { sharePinia } from "@/store/share";
 import API from "@/http/Share";
-import {NButton} from "naive-ui";
-import {fileIcon} from "@/components/file-table/common.js";
+import { NButton } from "naive-ui";
+import { fileIcon } from "@/components/file-table/common.js";
 import Preview from "@/components/file-preview/Preview.vue";
 
 const $route = useRoute();

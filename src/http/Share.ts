@@ -1,5 +1,5 @@
 import http, {alertErrMsg, API, axios} from "./Axios"
-import {AxiosRequestConfig, AxiosResponse} from 'axios'
+import {InternalAxiosRequestConfig, AxiosResponse} from 'axios'
 import $router from '@/router/index'
 import {sharePinia} from '@/store/share'
 import {download as DL} from "@/utils/Tools"
@@ -69,8 +69,7 @@ export const instance = axios.create({
 instance.defaults.withCredentials = false;
 // 添加请求拦截器
 instance.interceptors.request.use(
-  function (config: AxiosRequestConfig) {
-    if (!config.headers) config.headers = {};
+  function (config: InternalAxiosRequestConfig) {
     config.headers["Authorization"] = "Bearer " + (sharePinia().token || "");
     return config;
   }
@@ -116,7 +115,7 @@ instance.interceptors.response.use(
   if (password == null) {
     option.show = false;
   }
-  return instance.post(API("/share/pass"), {id, password}, option).then((res: any) => {
+  return instance.post(API("/public/pass"), {id, password}, option).then((res: any) => {
     if (res.code == 200 && res.token) {
       sharePinia().setToken(id, res.token);
     } else {
@@ -132,7 +131,7 @@ instance.interceptors.response.use(
  * @returns Promise
  */
 export const getShareInfo = (id: string, path: string) => {
-  return instance.post(API("/share/list"), { id, path }).then((res: any) => {
+  return instance.post(API("/public/shareInfo"), { id, path }).then((res: any) => {
     if (res.code == 200) {
       return res.data;
     }
@@ -140,7 +139,7 @@ export const getShareInfo = (id: string, path: string) => {
 }
 
 function getLink(id: string, path: string) {
-  return instance.post(API(`/share/link`), {
+  return instance.post(API(`/public/link`), {
     resourceId: id, path
   }).then(res => res.data);
 }

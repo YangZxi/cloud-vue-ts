@@ -1,6 +1,9 @@
 <template>
   <div>
-    <div v-show="props.maximize" style="width: 100%; height: calc(100% - 35px)">
+    <div
+      v-show="props.maximize"
+      style="width: 100%; height: calc(100% - 35px)"
+    >
       <TextEditor
         ref="editorRef"
         style="border: 1px #ececec solid; box-sizing: border-box;"
@@ -9,22 +12,42 @@
         read-only
       />
       <div class="operateor">
-        <n-button size="small" v-if="edit == false" @click="toggleEdit(true)" color="#ff69b4">编辑</n-button>
-        <n-button size="small" v-if="edit" @click="toggleEdit(false)">取消</n-button>
-        <n-button size="small" v-if="edit" type="primary" @click="saveContent">保存</n-button>
+        <n-button
+          v-if="edit == false"
+          size="small"
+          color="#ff69b4"
+          @click="toggleEdit(true)"
+        >
+          编辑
+        </n-button>
+        <n-button
+          v-if="edit"
+          size="small"
+          @click="toggleEdit(false)"
+        >
+          取消
+        </n-button>
+        <n-button
+          v-if="edit"
+          size="small"
+          type="primary"
+          @click="saveContent"
+        >
+          保存
+        </n-button>
       </div>
     </div>
-    <div v-show="!props.maximize" >
+    <div v-show="!props.maximize">
       {{ content }}
     </div>
   </div>
 </template>
 
 <script setup>
-import {defineExpose, onMounted, ref, watch} from "vue";
-import http from "@/http/XMLHttpRequest";
+import { defineExpose, onMounted, ref, watch } from "vue";
+import http from "@/http/Axios";
 import TextEditor from "@/components/TextEditor/TextEditor.vue";
-import {saveContent as saveContentHttp} from "@/http/Explore";
+import { saveContent as saveContentHttp } from "@/http/Explore";
 
 const props = defineProps({
   resource: Object,
@@ -69,7 +92,7 @@ const setReadOnly = function(flag = false) {
 const toggleEdit = function(flag) {
   edit.value = flag;
   editorRef.value.setReadOnly(!flag);
-}
+};
 
 /**
  * 保存文件内容
@@ -110,3 +133,4 @@ defineExpose({
   margin-top: unset;
 }
 </style>
+@/http/Axios

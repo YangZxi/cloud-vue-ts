@@ -1,4 +1,4 @@
-import http, {alertErrMsg, API, axios} from "./XMLHttpRequest"
+import http, {alertErrMsg, API, axios} from "./Axios"
 import {AxiosRequestConfig, AxiosResponse} from 'axios'
 import $router from '@/router/index'
 import {sharePinia} from '@/store/share'

@@ -208,6 +208,10 @@ const popselect = reactive({
   value: "",
   options: [
     {
+      label: "修改密码",
+      value: "Password"
+    },
+    {
       label: "我的分享",
       value: "ShareList"
     },
@@ -218,6 +222,11 @@ const popselect = reactive({
   ],
   popselectHanlder: (val: string) => {
     switch (val) {
+      case "Password":
+        $router.push({
+          name: "Password"
+        });
+        break;
       case "ShareList":
         $router.push({
           name: "ShareList"

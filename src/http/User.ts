@@ -1,5 +1,5 @@
 import { user } from "@/store/user"
-import http, { API } from "@/http/XMLHttpRequest"
+import http, { API } from "@/http/Axios"
 
 const store = user();
 

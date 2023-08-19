@@ -1,4 +1,4 @@
-import http from "./XMLHttpRequest"
+import http from "./Axios"
 import API, {SERVER_DOWNLOAD, SERVER_PREVIEW} from "./API"
 import {download as DL} from "@/utils/Tools"
 import $router from "@/router/index";

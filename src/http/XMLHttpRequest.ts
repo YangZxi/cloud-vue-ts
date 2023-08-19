@@ -176,7 +176,6 @@ function request(method: Method, url: string, data: any, option: Option = {}): P
   });
 }
 
-
 export { axios, API, isMyApi, alertErrMsg, requestInterceptor }
 
 export type { RespBody }

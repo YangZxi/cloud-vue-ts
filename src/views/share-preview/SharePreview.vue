@@ -109,17 +109,17 @@ const getShareInfo = function(path) {
 };
 
 const intoPath = function(path) {
-  const backup = explorerPath.value;
-  if (path === 0) explorerPath.value = [];
-  else if (typeof path === "number") {
-    explorerPath.value.splice(path, explorerPath.value.length - path);
-  } else if (typeof path === "string") {
-    explorerPath.value.push(path);
-  }
-  path = explorerPath.value.join("/");
-  list(path).catch(() => {
-    explorerPath.value = backup;
-  });
+  // const backup = explorerPath.value;
+  // if (path === 0) explorerPath.value = [];
+  // else if (typeof path === "number") {
+  //   explorerPath.value.splice(path, explorerPath.value.length - path);
+  // } else if (typeof path === "string") {
+  //   explorerPath.value.push(path);
+  // }
+  // path = explorerPath.value.join("/");
+  // list(path).catch(() => {
+  //   explorerPath.value = backup;
+  // });
 };
 
 /* Table */
@@ -213,13 +213,6 @@ const columns = readonly([
   }
 ]);
 /* Table END */
-
-/**
- * 文件下载
- */
-function download(row) {
-
-}
 </script>
 
 <style lang="scss" scoped>

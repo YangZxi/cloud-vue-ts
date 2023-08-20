@@ -97,6 +97,8 @@ const handleValidateClick = (e: MouseEvent) => {
     }
     updatePassowrd(model.value.password).then(() => {
       $router.back();
+    }).catch(err => {
+      console.log(err);
     });
   });
 };

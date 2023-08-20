@@ -37,7 +37,7 @@ const routes: {
       ]
     },
     { path: "/login", name: "Login", component: () => import("@/views/Login/Login.vue"), props: false },
-    { path: "/share/:id", name: "SharePreview", component: () => import("@/views/share-preview/SharePreview.vue"), meta: { auth: false } },
+    { path: "/public/share/:id", name: "SharePreview", component: () => import("@/views/share-preview/SharePreview.vue"), meta: { auth: false } },
     { path: "/test", name: "Test", component: () => import("@/views/Test.vue") },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: () => import("@/views/error/404.vue") }
   ],
@@ -51,7 +51,7 @@ const routes: {
     },
     { path: "/login", name: "Login", component: () => import("@/views/Login/Login-m.vue"), props: false },
     { path: "/preview/:id", name: "Preview", component: () => import("@/views/preview/Preview-m.vue") },
-    { path: "/share/:id", name: "SharePreview", component: () => import("@/views/share-preview/SharePreview.vue"), meta: { auth: false } },
+    { path: "/public/share/:id", name: "SharePreview", component: () => import("@/views/share-preview/SharePreview.vue"), meta: { auth: false } },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: () => import("@/views/error/404.vue") }
   ]
 }

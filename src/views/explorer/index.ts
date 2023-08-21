@@ -51,7 +51,7 @@ export const shareDialog = reactive<ShareDialogType>({
   }
 });
 
-const SHARE_PREVIEW_URL = "/share";
+const SHARE_PREVIEW_URL = "/public/share";
 export const shareHandler = function() {
   shareDialog.loading = true;
   let deadline = shareDialog.form.deadline;

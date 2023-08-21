@@ -1,9 +1,63 @@
-import http, {alertErrMsg, API, axios} from "./XMLHttpRequest"
-import {AxiosRequestConfig, AxiosResponse} from 'axios'
+import http, {alertErrMsg, API, axios} from "./Axios"
+import {InternalAxiosRequestConfig, AxiosResponse} from 'axios'
 import $router from '@/router/index'
 import {sharePinia} from '@/store/share'
 import {download as DL} from "@/utils/Tools"
 import {SERVER_DOWNLOAD, SERVER_PREVIEW} from "./API"
+
+
+/**
+ * 创建分享链接
+ */
+export const createShare = (data: any) => {
+  return http.post(API("/share/create"), data).then((res) => {
+    if (res.code == 200) {
+      return res.data;
+    }
+  });
+}
+
+/**
+ * 获取当前用户的分享列表
+ */
+export const listShare = () => {
+  return http.get(API("/share/list")).then((res) => {
+    if (res.code == 200) {
+      return res.data;
+    }
+  });
+}
+
+/**
+ * 更新分享的资源
+ */
+export const updateShare = (data: any) => {
+  return http.post(API("/share/update"), data).then((res) => {
+    if (res.code == 200) {
+      return res.data;
+    }
+  });
+}
+
+/**
+ * 删除分享
+ */
+export const deleteShare = (id: number) => {
+  return http.get(API(`/share/delete/${id}`)).then((res) => {
+    if (res.code == 200) {
+      return res.data;
+    }
+  });
+}
+
+
+
+/**
+ * 以下是分享界面的 API
+ */
+
+
+
 
 export const instance = axios.create({
   headers: {
@@ -11,13 +65,11 @@ export const instance = axios.create({
   }
 });
 
-
 // 请求是否带上cookie
 instance.defaults.withCredentials = false;
 // 添加请求拦截器
 instance.interceptors.request.use(
-  function (config: AxiosRequestConfig) {
-    if (!config.headers) config.headers = {};
+  function (config: InternalAxiosRequestConfig) {
     config.headers["Authorization"] = "Bearer " + (sharePinia().token || "");
     return config;
   }
@@ -54,19 +106,6 @@ instance.interceptors.response.use(
 
 
 /**
- * 创建分享链接
- * @param data 
- * @returns Promise
- */
-export const createShare = (data: any) => {
-  return http.post(API("/share/create"), data).then((res) => {
-    if (res.code == 200) {
-      return res.data;
-    }
-  });
-}
-
-/**
  * 根据分享 id 获取分享内容
  * @param id 
  * @param password 
@@ -76,7 +115,7 @@ export const createShare = (data: any) => {
   if (password == null) {
     option.show = false;
   }
-  return instance.post(API("/share/pass"), {id, password}, option).then((res: any) => {
+  return instance.post(API("/public/pass"), {id, password}, option).then((res: any) => {
     if (res.code == 200 && res.token) {
       sharePinia().setToken(id, res.token);
     } else {
@@ -91,8 +130,8 @@ export const createShare = (data: any) => {
  * @param id 
  * @returns Promise
  */
-export const getShareList = (id: string, path: string) => {
-  return instance.post(API("/share/list"), { id, path }).then((res: any) => {
+export const getShareInfo = (id: string, path: string) => {
+  return instance.post(API("/public/shareInfo"), { id, path }).then((res: any) => {
     if (res.code == 200) {
       return res.data;
     }
@@ -100,7 +139,7 @@ export const getShareList = (id: string, path: string) => {
 }
 
 function getLink(id: string, path: string) {
-  return instance.post(API(`/share/link`), {
+  return instance.post(API(`/public/link`), {
     resourceId: id, path
   }).then(res => res.data);
 }
@@ -127,7 +166,7 @@ export const preview = (id: string, path: string) => {
 export default {
   createShare,
   pass,
-  getShareList,
+  getShareInfo,
   download,
   preview
 }

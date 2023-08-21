@@ -31,11 +31,13 @@ const routes: {
       path: "/", name: "Index", component: () => import("@/views/Index.vue"), children: [
         { path: "/", name: "Home", component: () => import("@/views/Home/Home.vue"), redirect: "/explorer/local", meta: { auth: false }, children: [] },
         { path: "/explorer/:name?", name: "Explorer", component: () => import("@/views/explorer/Explorer.vue") },
-        { path: "/mine", name: "Mine", component: () => import("@/views/mine/Mine.vue") },
+        { path: "/mine", name: "Mine", component: () => import("@/views/mine/Mine.vue")},
+        { path: "/mine/password", name: "Password", component: () => import("@/views/mine/Password.vue") },
+        { path: "/mine/share", name: "ShareList", component: () => import("@/views/mine/ShareList.vue") }
       ]
     },
     { path: "/login", name: "Login", component: () => import("@/views/Login/Login.vue"), props: false },
-    { path: "/share/:id", name: "Share", component: () => import("@/views/share/Share.vue"), meta: { auth: false } },
+    { path: "/public/share/:id", name: "SharePreview", component: () => import("@/views/share-preview/SharePreview.vue"), meta: { auth: false } },
     { path: "/test", name: "Test", component: () => import("@/views/Test.vue") },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: () => import("@/views/error/404.vue") }
   ],
@@ -49,7 +51,7 @@ const routes: {
     },
     { path: "/login", name: "Login", component: () => import("@/views/Login/Login-m.vue"), props: false },
     { path: "/preview/:id", name: "Preview", component: () => import("@/views/preview/Preview-m.vue") },
-    { path: "/share/:id", name: "Share", component: () => import("@/views/share/Share.vue"), meta: { auth: false } },
+    { path: "/public/share/:id", name: "SharePreview", component: () => import("@/views/share-preview/SharePreview.vue"), meta: { auth: false } },
     { path: "/:pathMatch(.*)*", name: "NotFound", component: () => import("@/views/error/404.vue") }
   ]
 }

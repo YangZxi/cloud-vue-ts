@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
+import axios, { AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import $router from '@/router/index'
 import { user } from '@/store/user'
 import API from "./API"
@@ -31,12 +31,11 @@ const instance = axios.create({
 // 请求是否带上cookie
 instance.defaults.withCredentials = false;
 // 添加请求拦截器
-function requestInterceptor(config: AxiosRequestConfig) {
+function requestInterceptor(config: InternalAxiosRequestConfig) {
   // 在发送请求之前做些什么
   // 添加此之前添加Token
   // console.log(store.state.token)
   if (isMyApi(config.url)) {
-    if (!config.headers) config.headers = {};
     if (!config.headers["Authorization"]) {
       config.headers["Authorization"] = "Bearer " + user().token;
     }
@@ -60,7 +59,7 @@ const RES_CODE: RES_CODE_TYPE =  {
 
 // 添加响应拦截器
 instance.interceptors.response.use(
-  function (response: YAxiosResponse) {
+  function (response: AxiosResponse) {
     // 对响应数据做点什么
     console.log(response);
     if (response.headers["content-type"] === "application/json") {
@@ -175,7 +174,6 @@ function request(method: Method, url: string, data: any, option: Option = {}): P
     return Promise.reject(err.data ? err.data : { code: err.status, msg: "请求出错，请联系管理员", data: null });
   });
 }
-
 
 export { axios, API, isMyApi, alertErrMsg, requestInterceptor }
 

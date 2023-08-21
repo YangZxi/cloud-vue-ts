@@ -66,12 +66,12 @@
 <script setup>
 import PassInput from "@/components/PassInput.vue";
 import FilePath from "@/components/ExplorerToolBar/FilePath.vue";
-import {h, onMounted, readonly, ref} from "vue";
-import {useRoute} from "vue-router";
-import {sharePinia} from "@/store/share";
+import { h, onMounted, readonly, ref } from "vue";
+import { useRoute } from "vue-router";
+import { sharePinia } from "@/store/share";
 import API from "@/http/Share";
-import {NButton} from "naive-ui";
-import {fileIcon} from "@/components/file-table/common.js";
+import { NButton } from "naive-ui";
+import { fileIcon } from "@/components/file-table/common.js";
 import Preview from "@/components/file-preview/Preview.vue";
 
 const $route = useRoute();
@@ -86,7 +86,7 @@ onMounted(() => {
   window.$loadingBar.start();
   // list().then(() => window.$loadingBar.finish()).catch(() => window.$loadingBar.error());
   API.pass(id.value, null).then(() => {
-    list();
+    getShareInfo();
   }).catch(() => {
     showPwd.value = true;
   });
@@ -95,13 +95,13 @@ onMounted(() => {
   }, 10000);
 });
 
-const list = function(path) {
+const getShareInfo = function(path) {
   if (sharePinia().token === null) {
     showPwd.value = true;
     return Promise.resolve(1);
   }
   window.$loadingBar.start();
-  return API.getShareList(id.value, path).then(res => {
+  return API.getShareInfo(id.value, path).then(res => {
     shareData.value = res;
     console.log(shareData.value);
     window.$loadingBar.finish();
@@ -109,17 +109,17 @@ const list = function(path) {
 };
 
 const intoPath = function(path) {
-  const backup = explorerPath.value;
-  if (path === 0) explorerPath.value = [];
-  else if (typeof path === "number") {
-    explorerPath.value.splice(path, explorerPath.value.length - path);
-  } else if (typeof path === "string") {
-    explorerPath.value.push(path);
-  }
-  path = explorerPath.value.join("/");
-  list(path).catch(() => {
-    explorerPath.value = backup;
-  });
+  // const backup = explorerPath.value;
+  // if (path === 0) explorerPath.value = [];
+  // else if (typeof path === "number") {
+  //   explorerPath.value.splice(path, explorerPath.value.length - path);
+  // } else if (typeof path === "string") {
+  //   explorerPath.value.push(path);
+  // }
+  // path = explorerPath.value.join("/");
+  // list(path).catch(() => {
+  //   explorerPath.value = backup;
+  // });
 };
 
 /* Table */
@@ -213,13 +213,6 @@ const columns = readonly([
   }
 ]);
 /* Table END */
-
-/**
- * 文件下载
- */
-function download(row) {
-
-}
 </script>
 
 <style lang="scss" scoped>

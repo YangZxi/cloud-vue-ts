@@ -1,4 +1,4 @@
-import { axios } from "./XMLHttpRequest"
+import { axios } from "./Axios"
 import API, { SERVER_BASE } from "./API"
 
 const instance = axios.create({

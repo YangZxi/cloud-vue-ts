@@ -142,9 +142,9 @@
 
 <script setup lang="ts">
 import CFilePath from "./FilePath.vue";
-import { h, inject, reactive } from "vue";
+import { h, reactive } from "vue";
 import { user } from "@/store/user";
-import { axios } from "@/http/XMLHttpRequest";
+import { axios } from "@/http/Axios";
 import { createFile } from "@/http/Explore";
 // import YButton from "@/components/YButton.vue"
 import type { AxiosRequestConfig } from "axios";
@@ -295,3 +295,4 @@ const customRequest = ({
   padding-left: 5px;
 }
 </style>
+@/http/Axios

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import http from "@/http/XMLHttpRequest"
+import http from "@/http/Axios"
 import API from "@/http/API"
 import type { User } from "@/type/type";
 

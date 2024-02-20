@@ -5,8 +5,8 @@ import http from "@/http/Other"
 type stateType = {
     bucket: Bucket | null,
     resource: Resource | null,
-    filetype: String | null
-} 
+    filetype: Record<string, string> | null
+}
 
 //创建VueX对象
 export const otherPinia = defineStore("temp", {
@@ -29,7 +29,6 @@ export const otherPinia = defineStore("temp", {
         async getFiletype() {
             if (!this.filetype) {
                 await http.filetype().then(res => {
-                    console.log(res);
                     this.filetype = res;
                 });
             }

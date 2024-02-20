@@ -1,9 +1,7 @@
-name: Build to remote server
+name: Build and Release
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
 

@@ -51,11 +51,12 @@ jobs:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           privateKey: ${{ secrets.DEPLOY_SSH_KEY }}
-
-      - name: Archive files
-        run: tar -czf dist.tar.gz dist
-
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: ./dist.tar.gz
+      
+      - name: Deploy to server
+        uses: wlixcc/SFTP-Deploy-Action@v1.0 
+        with:  
+          username: ${{ secrets.DEPLOY_USER }}
+          server: ${{ secrets.DEPLOY_HOST }}
+          ssh_private_key: ${{ secrets.DEPLOY_SSH_KEY }}
+          local_path: './dist/*'
+          remote_path: ${{ secrets.DEPLOY_PATH }}

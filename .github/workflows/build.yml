@@ -44,19 +44,10 @@ jobs:
       - name: build
         run: pnpm run build
 
-      - name: Delete exist files
-        uses: garygrossgarten/github-action-ssh@release
+      - name: Archive files
+        run: tar -czf dist.tar.gz dist
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          command: rm -rf ${{ secrets.DEPLOY_PATH }} && mkdir ${{ secrets.DEPLOY_PATH }}
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          privateKey: ${{ secrets.DEPLOY_SSH_KEY }}
-      
-      - name: Deploy to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0 
-        with:  
-          username: ${{ secrets.DEPLOY_USER }}
-          server: ${{ secrets.DEPLOY_HOST }}
-          ssh_private_key: ${{ secrets.DEPLOY_SSH_KEY }}
-          local_path: './dist/*'
-          remote_path: ${{ secrets.DEPLOY_PATH }}
+          files: ./dist.tar.gz

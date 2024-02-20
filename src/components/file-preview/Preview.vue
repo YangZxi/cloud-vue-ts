@@ -18,7 +18,7 @@
     </div>
     <!-- </Transition> -->
     <div class="overlay" v-if="maximize" @click="close"></div>
-    
+
     <div v-if="viewType !== Default" class="maximize-btn">
       <n-button tertiary circle @click="open">
         <template #icon>
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { computed, watch, ref, Transition } from "vue";
+import { computed, watch, ref } from "vue";
 import Default from "./Default.vue";
 import YImage from "./Image.vue";
 import YImageM from "./Image-m.vue";

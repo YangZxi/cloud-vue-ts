@@ -76,7 +76,7 @@
               <n-button
                 type="primary"
                 size="small"
-                @click=""
+                @click="showQRCode(el.id)"
               >
                 二维码
               </n-button>
@@ -92,21 +92,50 @@
         </tbody>
       </n-table>
     </div>
+
+    <n-modal
+      v-model:show="shareDialog.visible"
+      preset="dialog"
+      title="二维码"
+      :show-icon="false"
+    >
+      <div style="text-align: center">
+        <vue-qrcode
+          :value="shareDialog.url"
+          :size="200"
+        />
+      </div>
+      <template #action>
+        <n-button
+          size="small"
+          color="#ff69b4"
+          @click="shareDialog.visible = false"
+        >
+          好的
+        </n-button>
+      </template>
+    </n-modal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { copyText } from "@/utils/Tools";
 import {
   listShare as listShareApi,
   deleteShare as deleteShareApi
 } from "@/http/Share";
+import { shareDialog, shareHandler } from "@/views/explorer";
+import VueQrcode from "@chenfengyuan/vue-qrcode";
 
 const $router = useRouter();
 
 const shareList = ref([]);
+const shareDialog = reactive({
+  visible: false,
+  url: "",
+});
 onMounted(() => {
   listShare();
 });
@@ -118,9 +147,14 @@ function listShare() {
 }
 
 async function copyLink(id: string) {
-  const url = window.location.origin + "/share/" + id;
+  const url = window.location.origin + "/public/share/" + id;
   await copyText(url);
   window.$message.success("复制成功");
+}
+
+function showQRCode(id: string) {
+  shareDialog.url = window.location.origin + "/public/share/" + id;
+  shareDialog.visible = true;
 }
 
 function deleteShare(id: number) {

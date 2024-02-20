@@ -44,7 +44,7 @@ jobs:
         run: pnpm run build
 
       - name: Archive files
-        run: tar -czf dist.tar.gz dist
+        run: tar -czf dist.tar.gz -C ./dist/ .
 
       - name: Release
         uses: softprops/action-gh-release@v1

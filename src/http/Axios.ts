@@ -25,7 +25,7 @@ const { loadingBar } = createDiscreteApi(
 );
 
 const instance = axios.create({
-  baseURL: SERVER_API,
+  baseURL: SERVER_BASE,
 });
 
 // 请求是否带上cookie
